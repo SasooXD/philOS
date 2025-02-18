@@ -1,0 +1,1 @@
+ia16-elf-gcc -S -Os -ffreestanding -fno-builtin -masm=intel -fomit-frame-pointer -fno-exceptions -fno-asynchronous-unwind-tables -o output.s input.c && python clean.py && nasm final.asm
