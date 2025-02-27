@@ -1,4 +1,9 @@
+# Build directory (binaries are published with GitHub's releases)
 build
+
+# External documentation
 docs/ref
+
+# KiCad useless stuff
 hw/philos-backups
 hw/fp-info-cache
