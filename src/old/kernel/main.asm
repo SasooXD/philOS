@@ -7,7 +7,7 @@ bits 16 ; emulating an i8086
 ;! No instruction may be put before this section.
 
 ;* Dummy function that jumps to the real starting point of the program.
-start: 
+start:
 	jmp main
 
 ;* Prints a string to the stdio until it encounters a NULL character.
@@ -15,7 +15,7 @@ start:
 puts:
 	; Save registers which will be modified
 	push si
-	push ax 
+	push ax
 
 ;* Loops over all the characters of which DS:SI point to.
 .loop:

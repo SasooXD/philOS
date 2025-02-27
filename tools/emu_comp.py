@@ -1,12 +1,14 @@
+#TODO: rewrite
+
 import re
 
 def process_assembly(file_path, output_path):
     # Modello per identificare indirizzamenti diretti con offset
     pattern = re.compile(r"\[([a-z]{2})\s*([\+\-])\s*(\d+)\]")
-    
+
     with open(file_path, 'r') as f:
         lines = f.readlines()
-    
+
     new_lines = []
     for line in lines:
         match = pattern.search(line)
@@ -27,7 +29,7 @@ def process_assembly(file_path, output_path):
             new_lines.append(modified_line)
         else:
             new_lines.append(line)
-    
+
     with open(output_path, 'w') as f:
         f.writelines(new_lines)
 

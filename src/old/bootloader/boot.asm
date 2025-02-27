@@ -27,7 +27,7 @@ bdb_large_sector_count: dd 0
 ebr_drive_number: db 0 ; 0x00: floppy disk
 db 0 ; reserved
 ebr_signature: db 28h
-ebr_volume_id: db 1h, 6h, 3h, 2h ; serial number - the number doesn't matter and here it display Spinoza's birth year 
+ebr_volume_id: db 1h, 6h, 3h, 2h ; serial number - the number doesn't matter and here it display Spinoza's birth year
 ebr_volume_label: db 'BARUCH     ' ; 11 bytes, padded with spaces
 ebr_system_id: db 'FAT12   ' ;system FAT type identifier - 8 bytes
 
@@ -36,7 +36,7 @@ ebr_system_id: db 'FAT12   ' ;system FAT type identifier - 8 bytes
 ;! No instruction may be put before this section.
 
 ;* Dummy function that jumps to the real starting point of the program.
-start: 
+start:
 	jmp main
 
 ;* Prints a string to the stdio until it encounters a NULL character.
@@ -44,7 +44,7 @@ start:
 puts:
 	; Save registers which will be modified
 	push si
-	push ax 
+	push ax
 
 ;* Loops over all the characters of which DS:SI point to.
 .loop:
@@ -166,7 +166,7 @@ disk_read:
 
 	; The carry flag is not cleared, operation has failed
 	popa
-	call disk_reset ; a disk reset is neccesary to address the problem. 
+	call disk_reset ; a disk reset is neccesary to address the problem.
 
 	dec di ; decremets di
 	test di, di ; checks if di is 0,
