@@ -3,4 +3,7 @@
   (lib (name "SN74AHC574N")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74AHC574N.kicad_sym")(options "")(descr ""))
   (lib (name "CD4046BEE4")(type "KiCad")(uri "${KIPRJMOD}/symbols/CD4046BEE4.kicad_sym")(options "")(descr ""))
   (lib (name "W27C512-45Z")(type "KiCad")(uri "${KIPRJMOD}/symbols/W27C512-45Z.kicad_sym")(options "")(descr ""))
+  (lib (name "SST39SF010A_70_4C_PHE")(type "KiCad")(uri "${KIPRJMOD}/symbols/SST39SF010A_70_4C_PHE.kicad_sym")(options "")(descr ""))
+  (lib (name "SN74LS161AN")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74LS161AN.kicad_sym")(options "")(descr ""))
+  (lib (name "SN74LS373N")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74LS373N.kicad_sym")(options "")(descr ""))
 )
