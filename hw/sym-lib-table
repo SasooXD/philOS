@@ -9,4 +9,7 @@
   (lib (name "AS6C1008_55PCN")(type "KiCad")(uri "${KIPRJMOD}/symbols/AS6C1008_55PCN.kicad_sym")(options "")(descr ""))
   (lib (name "71256SA25TPGI")(type "KiCad")(uri "${KIPRJMOD}/symbols/71256SA25TPGI.kicad_sym")(options "")(descr ""))
   (lib (name "CD4093BE")(type "KiCad")(uri "${KIPRJMOD}/symbols/CD4093BE.kicad_sym")(options "")(descr ""))
+  (lib (name "ABLS_15_000MHZ_B4_T")(type "KiCad")(uri "${KIPRJMOD}/symbols/ABLS_15_000MHZ_B4_T.kicad_sym")(options "")(descr ""))
+  (lib (name "K150J15C0GF5TL2")(type "KiCad")(uri "${KIPRJMOD}/symbols/K150J15C0GF5TL2.kicad_sym")(options "")(descr ""))
+  (lib (name "SN74AHC14N")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74AHC14N.kicad_sym")(options "")(descr ""))
 )
