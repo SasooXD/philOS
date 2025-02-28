@@ -1,3 +1,9 @@
+# This is a script that "translates" the output of ia16-elf-gcc -S into something that nasm
+# can understand better. By default, gcc compilation creates assembly files that are then
+# fed into gas which has different directives and other things that we don't need/need to remove.
+# The -masm=intel flag from ia16-elf-gcc is still needed tho, because not a chance i'm
+# reading/writing assembly with that absolutely horrendous and complete dogshit of at&t syntax.
+
 #TODO: rewrite this (kinda works for our purposes but needs to be translated and reformatted)
 
 import re
