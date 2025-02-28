@@ -12,4 +12,6 @@
   (lib (name "ABLS_15_000MHZ_B4_T")(type "KiCad")(uri "${KIPRJMOD}/symbols/ABLS_15_000MHZ_B4_T.kicad_sym")(options "")(descr ""))
   (lib (name "K150J15C0GF5TL2")(type "KiCad")(uri "${KIPRJMOD}/symbols/K150J15C0GF5TL2.kicad_sym")(options "")(descr ""))
   (lib (name "SN74AHC14N")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74AHC14N.kicad_sym")(options "")(descr ""))
+  (lib (name "MAX232N")(type "KiCad")(uri "${KIPRJMOD}/symbols/MAX232N.kicad_sym")(options "")(descr ""))
+  (lib (name "P8251A")(type "KiCad")(uri "${KIPRJMOD}/symbols/P8251A.kicad_sym")(options "")(descr ""))
 )
