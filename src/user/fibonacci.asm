@@ -1,5 +1,5 @@
 BITS 16
-ORG 0xF0000
+ORG 0xF0000 ; User space starting address (ROM segment, 5th block)
 
 start:
 	MOV		AX,	0

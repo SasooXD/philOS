@@ -1,14 +1,14 @@
 BITS 16
-ORG 0xF000 ; Should be an okay starting address
+ORG 0xF09FF ; BIOS starting address (ROM segment, 2nd block)
 
 start:
 	CLI						; Clear interrupt flag
-	MOV		AX,	0xF000		; ROM Segment
+	MOV		AX,	0x0F000		; ROM Segment
 	MOV		DS,	AX
 	MOV		ES,	AX
 	MOV		SS,	AX
-	MOV		SP,	0xFFFE		; Stack setup near the end of ROM
-	STI						; Riabilita gli interrupt
+	MOV		SP,	0x0FFFE		; Stack setup near the end of ROM
+	STI						; Re-enable interrupts
 
 	CALL	init_screen		; Init video
 	CALL	print_banner	; Print message
@@ -32,15 +32,15 @@ print_banner:
 	MOV		SI,	msg
 print_loop:
 	LODSB					; Load character in AL
-	OR		AL,	AL			; end of string?
+	OR		AL,	AL			; End of string?
 	JZ		done
-	MOV		AH,	0x0E		; print character
+	MOV		AH,	0x0E		; Print character
 	INT		0x10
 	JMP		print_loop
 done:
 	RET
 
-msg DB 'Welcome to philOS', 0
+msg DB 'Welcome to philOS.', 0
 
 ; -------------------------------------------------
 ; ROM segment termination

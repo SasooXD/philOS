@@ -4,7 +4,6 @@
 # General rules for pretty much everything
 *	eol=lf
 *	indent-tabs=true
-*	tab-width=4
 
 # Rules for documentation (text) files
 *.pdf				diff=astextplain

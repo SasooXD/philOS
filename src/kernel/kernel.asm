@@ -1,6 +1,8 @@
 BITS 16
-ORG 0x5000 ;! Random ass address, the kernel should't start here
-;TODO: Pick a good starting address for the kernel
+ORG 0x00400 ; Kernel image starting address (ROM segment, 4th block)
+;! This is not an address in the RAM segment! This is where the image should lie (in ROM),
+;! but unless safe mode is on, we should be in RAM. Otherwise, the address is correct
+;! and we can safely continue.
 
 start:
 	;TODO: DS and ES must be moved somewhere around here, SS has to be placed better
