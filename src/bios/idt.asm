@@ -15,8 +15,7 @@ ORG 0x00000 ; IDT starting address (ROM segment, 1st block)
 ; range, there's not enough space to dictate all 20 bits of it. So we have to do some math:
 ; we know that physical address = (segment * 16) + offset, so we need to take
 ; the first 16 bits as the segment (that's the first 4 hexadecimal digits) and the remaining
-; 4 bits (that's the last hexadecimal digit) as the offset. I'm not gonna
-; explain how i got those numbers but you can see for yourself that everything adds up.
+; 4 bits (that's the last hexadecimal digit) as the offset.
 
 ; We will try as best as we can to follow the official Intel IDT layout, but some of it
 ; is just stupidly made (and/or not useful for our purposes).
