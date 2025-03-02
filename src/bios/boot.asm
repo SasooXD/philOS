@@ -1,6 +1,7 @@
 ; In reality, this is absolutely not a "bootloader", it just jumps to the BIOS.
 ; It's the BIOS' job to, among other things, bootstrap the kernel.
 
+CPU 8086
 BITS 16
 ORG 0xFFFF0 ; The i8086 will begin execution here after RESET (ROM segment, 3rd block)
 

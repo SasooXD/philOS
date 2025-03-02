@@ -3,6 +3,7 @@
 ; interrupt handled by the system. The pointer points to the handler of each
 ; interrupt, which is usually part of the BIOS (could also be in the kernel for SPM stuff).
 
+CPU 8086
 BITS 16
 ORG 0x00000 ; IDT starting address (ROM segment, 1st block)
 

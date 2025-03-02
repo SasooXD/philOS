@@ -1,3 +1,4 @@
+CPU 8086
 BITS 16
 ORG 0xF0000 ; User space starting address (ROM segment, 5th block)
 

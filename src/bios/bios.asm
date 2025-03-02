@@ -1,3 +1,4 @@
+CPU 8086
 BITS 16
 ORG 0xF09FF ; BIOS starting address (ROM segment, 2nd block)
 

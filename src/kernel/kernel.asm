@@ -1,3 +1,4 @@
+CPU 8086
 BITS 16
 ORG 0x00400 ; Kernel image starting address (ROM segment, 4th block)
 ;! This is not an address in the RAM segment! This is where the image should lie (in ROM),
