@@ -21,18 +21,23 @@ ORG 0x00000 ; IDT starting address (ROM segment, 1st block)
 ; We will try as best as we can to follow the official Intel IDT layout, but some of it
 ; is just stupidly made (and/or not useful for our purposes).
 
+; INT 0x00: Division by zero
+; TODO: place real handler address here
+dw	0x0000
+dw	0x0000
+
 ; INT 0x01: Single stepping (trap flag)
-;TODO: place real handler address here
+; TODO: place real handler address here
 dw	0x0000
 dw	0x0000
 
 ; INT 0x02: NMI (non-maskable interrupt)
-;TODO: place real handler address here
+; TODO: place real handler address here
 dw	0x0000
 dw	0x0000
 
 ; INT 0x03: Breakpoint
-;TODO: place real handler address here
+; TODO: place real handler address here
 dw	0x0000
 dw	0x0000
 

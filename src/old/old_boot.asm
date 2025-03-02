@@ -202,7 +202,7 @@ disk_reset:
 	ret
 
 
-msg_hello: db 'Salve, mundi!', ENDL, 0 ; variable containing the Hello world! message
+msg_hello: db 'Hello, world!', ENDL, 0 ; variable containing the Hello world! message
 msg_error_read_failed: db 'Failed to read from disk.', ENDL, 0 ; variable containing the read fail error message
 
 times 510-($-$$) db 0 ; it cycles until the total size of the program is 510, minus the beggininning of the current line ($: ORG offset, $-$$: total lenght of program so far in bytes)

@@ -63,6 +63,6 @@ main:
 .halt:
 	jmp .halt
 
-msg_hello: db 	'Hello world!', ENDL, 0 ; variable containing the Hello world! message
+msg_hello: db 	'Hello, world!', ENDL, 0 ; variable containing the Hello world! message
 times 510-($-$$) db 0 ; it cycles until the total size of the program is 510, minus the beggininning of the current line ($: ORG offset, $-$$: total lenght of program so far in bytes)
 dw 0AA55h ; signature of the program
