@@ -15,7 +15,7 @@
 
 # Rules for binary files
 *.png	binary
-*.jpg	binary
+*.pdn	binary
 *.zip	binary
 
 # Exclude Git files from exporting
