@@ -48,3 +48,6 @@ dw 0xF09F
 ; INT 0x05: Emergency jump to kernel in safe mode (0x00400) (no IRET)
 dw 0x0000
 dw 0x0040
+
+; Padding until 1024 B
+times (1024 - ($ - $$)) db 0x00

@@ -11,3 +11,6 @@ start:
 jump_target:
 	dw			0x00000
 	dw			0xF09FF ; BIOS' starting address (ROM segment, 2nd block)
+
+; Padding until 16 B (doesn't really matter but i'll put it anyways)
+times (16 - ($ - $$)) db 0x00
