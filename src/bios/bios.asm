@@ -118,6 +118,6 @@ msg DB 'Welcome to philOS.', 0
 ; (POST: we must know the addresses of the ports beforehand...)
 ; TODO: POST and RAM check
 
-; TODO: safe mode!
+; TODO: safe mode (OPM)!
 ; And btw, is there some way to check if we came here from an interrupt? INT 0x05 exists for a
 ; reason, it's useless if we can't set safe mode on after the interrupt brought us here.

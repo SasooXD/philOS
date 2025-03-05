@@ -1,7 +1,7 @@
 ; This is the interrupt descriptor table (IDT) data structure. This is loaded in the first
 ; 1024 bytes of the i8086 total address space and it contains a pointer for each
 ; interrupt handled by the system. The pointer points to the handler of each
-; interrupt, which is usually part of the BIOS (could also be in the kernel for SPM stuff).
+; interrupt, which is usually part of the BIOS (could also be in the kernel for OPM stuff).
 
 CPU 8086
 BITS 16

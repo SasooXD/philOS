@@ -23,12 +23,12 @@ start:
 ; we better check that we are indeed in RAM: nuke everything if we can't write.
 ;TODO: Write check
 
-; We absolutely have no protected mode lol, but we should still implement something
-; to keep track of the kernel's address space. What could happen:
+; We absolutely have no protected mode lol, but we have an Arduino Mega
+; . What could happen:
 ; 	- A user process tries to access our space -> can we track if the illegal access
 ; 	is coming from a user process? if so, kill it
 ; 	- We try to overwrite our own space -> well, we can obv do that provided it's intentional,
 ; 	we might want to keep important addresses into stack.
-;TODO: Simulated protected mode
+;TODO: Ostensible protected mode (ostensible)
 
 ;TODO: Shell!!!
