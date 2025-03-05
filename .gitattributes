@@ -9,7 +9,7 @@
 # Rules for documentation (text) files
 *.pdf				diff=astextplain
 *.docx				diff=astextplain
-*.bibtex	text	diff=bibtex
+*.bib		text	diff=bibtex
 *.tex		text	diff=tex
 *.md		text	diff=markdown
 

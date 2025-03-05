@@ -1,0 +1,8 @@
+1. Introduzione - introduzione generale sul funzionamento del progetto a grandi linee e con linguaggio non tecnico [!!]
+2. DFD - schema grafico (data flow diagram) del funzionamento generale del progetto, linguaggio non tecnico [!]
+3. Specifiche - lista di funzioni del progetto, linguaggio lievemente tecnico ma comunque accessibile a tutti [!!!]
+4. Tecnologie - lista di tecnologie esterne, tecnicismi generali e funzionamento completo (di tutte le parti separate) del progetto [!!!]
+5. Organizzazione - schematica del circuito, eventuali note aggiuntive su particolari accorgimenti specifici [!!]
+6. Interfaccia - funzionamento del progetto a livello pratico dal punto di vista dell'utente finale [!!]
+7. Contributi - spiegazione della divisione del lavoro del gruppo [!]
+8. Collaudo - lista di test finali [!]

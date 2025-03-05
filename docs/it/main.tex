@@ -1,0 +1,86 @@
+\documentclass[a4paper,12pt]{article}
+% Package to make citations superscrit with brackets
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{references.bib}
+% Package to change margin size
+\usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{2cm}
+\usepackage{fancyhdr}
+% Package for highligths
+\usepackage{soul}
+% Colors for the references links
+\usepackage[dvipsnames]{xcolor}
+% Package to link references
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=CadetBlue,
+    filecolor=CadetBlue,      
+    urlcolor=CadetBlue,
+}
+% Package for lorem ipsum
+\usepackage{lipsum}
+% Package for removing paragraph identations
+\usepackage{parskip}
+
+\usepackage{fontspec}
+
+\usepackage[italian]{babel}
+
+\setmainfont[Mapping=tex-text]{CMU Serif}
+\setsansfont[Mapping=tex-text]{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
+
+\setlength\columnsep{18pt}
+% Sets bastract
+\renewenvironment{abstract}
+ {\par\noindent\textbf{\abstractname}\ \ignorespaces \\}
+ {\par\noindent\medskip}
+ 
+\begin{document}
+\thispagestyle{empty} % no number
+\footnotesize
+Revisione Nº0
+\hfill
+26 Febbraio 2025
+\normalsize 
+
+\begin{center}
+\textbf{ / / / VERSIONE TOTALMENTE PROVVISORIA / / /} 
+\end{center}
+
+\vspace*{\fill}
+\begin{center}
+\Large{\textbf{philOS}}
+\vspace{0.1cm}
+\normalsize
+\\ Matteo Bertolino, Alessandro Demichelis \\
+\vspace*{\fill}
+\vspace{0.5cm}
+\medskip
+\normalsize
+\end{center}
+
+\pagebreak
+
+\renewcommand{\contentsname}{Contenuti}
+\tableofcontents
+\bigskip
+
+\pagebreak
+
+\input{./sections/1_introduzione.tex}
+\input{./sections/2_dfd.tex}
+\input{./sections/3_specifiche.tex}
+\input{./sections/4_tecnologie.tex}
+\input{./sections/5_organizzazione.tex}
+\input{./sections/6_interfaccia.tex}
+\input{./sections/7_contributi.tex}
+\input{./sections/8_collaudo.tex}
+
+\renewcommand{\refname}{Riferimenti}
+\printbibliography
+\bigskip
+
+\end{document}
