@@ -1,4 +1,4 @@
-![philOS'](docs/banner.png)
+![philOS'](res/banner.png)
 
 # `msg DB 'Welcome to philOS.', 0`
 
