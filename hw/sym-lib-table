@@ -14,4 +14,5 @@
   (lib (name "SN74AHC14N")(type "KiCad")(uri "${KIPRJMOD}/symbols/SN74AHC14N.kicad_sym")(options "")(descr ""))
   (lib (name "MAX232N")(type "KiCad")(uri "${KIPRJMOD}/symbols/MAX232N.kicad_sym")(options "")(descr ""))
   (lib (name "P8251A")(type "KiCad")(uri "${KIPRJMOD}/symbols/P8251A.kicad_sym")(options "")(descr ""))
+  (lib (name "Arduino")(type "KiCad")(uri "${KIPRJMOD}/symbols/Arduino.kicad_sym")(options "")(descr ""))
 )
