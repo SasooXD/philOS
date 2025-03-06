@@ -8,19 +8,26 @@ ORG 0xF0A00 ; BIOS starting address (ROM segment, 2nd block)
 ; TODO: actually implement
 ; -------------------------------------------------
 start:
-	CLI						; Clear interrupt flag
-	MOV		AX,	0xF09F		; ROM Segment
+
+	; Clear interrupt flag
+	CLI
+
+	; ROM Segment
+	MOV		AX,	0xF09F
 	MOV		DS,	AX
 	MOV		ES,	AX
 	MOV		SS,	AX
-	MOV		SP,	0x0FFEE		; Stack setup near the end of ROM
-	STI						; Re-enable interrupts
 
-	CALL	init_screen		; Init video
-	CALL	print_banner	; Print message
+	; Stack setup near the end of ROM
+	MOV		SP,	0x0FFEE
 
-	CALL	clear_ram		; Init video
-	CALL	bootstrap	; Print message
+	; Re-enable interrupts
+	STI
+
+	CALL	init_screen
+	CALL	print_banner
+	CALL	clear_ram
+	CALL	bootstrap
 
 	; All done, goodbye BIOS!
 	;JMP FAR		0x0FE01
@@ -32,7 +39,7 @@ start:
 ; TODO: actually implement
 ; -------------------------------------------------
 init_screen:
-	MOV		AX,	0x03		; Text mode 80x25
+	MOV		AX,	0x03
 	INT		0x10
 	RET
 
@@ -44,11 +51,12 @@ init_screen:
 print_banner:
 	MOV		SI,	msg
 
+	; Print until end of string
 	print_loop:
-		LODSB					; Load character in AL
-		OR		AL,	AL			; End of string?
+		LODSB
+		OR		AL,	AL
 		JZ		done
-		MOV		AH,	0x0E		; Print character
+		MOV		AH,	0x0E
 		INT		0x10
 		JMP		print_loop
 
