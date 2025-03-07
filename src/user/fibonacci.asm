@@ -1,6 +1,6 @@
 CPU 8086
 BITS 16
-ORG 0xF0000 ; User space starting address (ROM segment, 5th block)
+ORG 0x08100 ; User space starting address (ROM segment, 5th block)
 
 start:
 	MOV		AX,	0

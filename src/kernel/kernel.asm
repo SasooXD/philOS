@@ -32,3 +32,6 @@ start:
 ;TODO: Ostensible protected mode (ostensible)
 
 ;TODO: Shell!!!
+
+; Padding until 32000 B
+times (32000 - ($ - $$)) db 0x00

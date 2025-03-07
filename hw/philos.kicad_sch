@@ -6,7 +6,7 @@
 	(paper "A2")
 	(title_block
 		(title "philOS")
-		(date "2025-02-26")
+		(date "2025-03-07")
 		(rev "0")
 	)
 	(lib_symbols
@@ -9190,6 +9190,19 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "philOS"
+		(exclude_from_sim no)
+		(at 528.574 385.318 0)
+		(effects
+			(font
+				(face "Jersey 25")
+				(size 12 12)
+				(bold yes)
+				(color 0 0 0 1)
+			)
+		)
+		(uuid "2519362c-e118-4d71-8242-81fc5507cc41")
+	)
 	(junction
 		(at 92.71 200.66)
 		(diameter 0)
@@ -17605,7 +17618,7 @@
 		)
 		(uuid "3f2584e0-b489-4961-aac5-2721f653b432")
 	)
-	(label "A19 1 = comando 0 = dato"
+	(label "A19: 1 = comando, 0 = dato"
 		(at 325.12 340.36 0)
 		(effects
 			(font
