@@ -11,8 +11,12 @@ CLEANING_SCRIPT	:= tools/clean.py
 # Build directories
 # BUILD_DIR contains all binaries
 # ASM_DIR is a subdirectory of BUILD_DIR and contains compiled code from C source code
+# DOCS_DIR is where the documentation files are, plus one more entry for each language
 BUILD_DIR	:= build
 ASM_DIR		:= $(BUILD_DIR)/asm
+DOCS_DIR	:= docs
+IT_DOCS_DIR	:= $(DOCS_DIR)/it
+EN_DOCS_DIR	:= $(DOCS_DIR)/en
 
 # Source code files in the src/ directory and all of its subdirectories
 ASM_FILES	:= $(shell find src -type f -name '*.asm')
@@ -26,8 +30,8 @@ C_BINS		:= $(patsubst $(ASM_DIR)/%.s,$(BUILD_DIR)/%.bin,$(C_ASM_FILES))
 # Mark files in ASM_DIR as secondary to prevent them from being deleted
 .SECONDARY: $(C_ASM_FILES)
 
-# Build all binary files
-all: $(ASM_BINS) $(C_BINS)
+# Build all binary and pdf files
+all: $(ASM_BINS) $(C_BINS) $(BUILD_DIR)/philOS-it.pdf
 	@echo "All done."
 
 # Create build directories if they do not exist
@@ -66,6 +70,10 @@ $(BUILD_DIR)/%.bin: src/%.asm | $(BUILD_DIR)
 		echo "$(ASM): Error when assembling \"$<\", aborting."; \
 		exit 1; \
 	fi
+
+# Compile italian documentation
+$(BUILD_DIR)/philOS-it.pdf: $(IT_DOCS_DIR)/main.typ
+	typst compile --root ../../ $(IT_DOCS_DIR)/main.typ $(BUILD_DIR)/philOS-it.pdf
 
 # Cleanup (make clean)
 clean:
