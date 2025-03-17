@@ -11,12 +11,8 @@ CLEANING_SCRIPT	:= tools/clean.py
 # Build directories
 # BUILD_DIR contains all binaries
 # ASM_DIR is a subdirectory of BUILD_DIR and contains compiled code from C source code
-# DOCS_DIR is where the documentation files are, plus one more entry for each language
 BUILD_DIR	:= build
 ASM_DIR		:= $(BUILD_DIR)/asm
-DOCS_DIR	:= docs
-IT_DOCS_DIR	:= $(DOCS_DIR)/it
-EN_DOCS_DIR	:= $(DOCS_DIR)/en
 
 # Source code files in the src/ directory and all of its subdirectories
 ASM_FILES	:= $(shell find src -type f -name '*.asm')
