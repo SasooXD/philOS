@@ -31,7 +31,7 @@ C_BINS		:= $(patsubst $(ASM_DIR)/%.s,$(BUILD_DIR)/%.bin,$(C_ASM_FILES))
 .SECONDARY: $(C_ASM_FILES)
 
 # Build all binary and pdf files
-all: $(ASM_BINS) $(C_BINS) $(BUILD_DIR)/philOS-it.pdf
+all: $(ASM_BINS) $(C_BINS)
 	@echo "All done."
 
 # Create build directories if they do not exist
@@ -70,10 +70,6 @@ $(BUILD_DIR)/%.bin: src/%.asm | $(BUILD_DIR)
 		echo "$(ASM): Error when assembling \"$<\", aborting."; \
 		exit 1; \
 	fi
-
-# Compile italian documentation
-$(BUILD_DIR)/philOS-it.pdf: $(IT_DOCS_DIR)/main.typ
-	typst compile --root ../../ $(IT_DOCS_DIR)/main.typ $(BUILD_DIR)/philOS-it.pdf
 
 # Cleanup (make clean)
 clean:
