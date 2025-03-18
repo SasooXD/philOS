@@ -2,7 +2,7 @@
 build
 
 # External documentation
-docs/ref
+docs/ext
 
 # KiCad useless stuff
 hw/philos-backups
