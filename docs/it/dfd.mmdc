@@ -1,0 +1,48 @@
+graph LR
+    subgraph Hardware
+        utente(Utente); terminale(Video terminale); ppi(Gestore periferiche); input((Inserimento comando)); output((Mostra risposta))
+
+        utente --> input --> terminale --> ppi
+        ppi --> terminale --> output --> utente
+        
+
+        pic(Gestore interruzioni); cpu(Unità di elaborazione centrale); mmu(Unità di gestione della memoria);  ram@{ shape: lin-rect, label: "Memoria dati volatile" }; rom@{ shape: lin-rect, label: "Memoria di sola lettura" }
+        lettura((Operazione di lettura)); scrittura((Operazione di scrittura)); interruzione((Interruzione dell'esecuzione));
+
+        ppi --> pic --> interruzione --> cpu
+
+        cpu <--> mmu
+        cpu --> ppi
+
+        mmu --> lettura
+        mmu --> scrittura
+
+        lettura --> ram
+        lettura --> rom
+
+        scrittura --> ram
+    end
+
+    subgraph Software TB
+        subgraph Spazio privilegiato
+            bios(BIOS); kernel(Kernel); idt@{ shape: lin-rect, label: "IDT" };; isr@{ shape: lin-rect, label: "ISR" }; memcheck((Controllo della memoria)); post((POST)); bootstrap((Bootstrap)); gestione_interrupt((Gestione degli interrupt)); gestione_memoria((Gestione della memoria)); init_userspace((Inizializzazione spazio utente)); chiamata_interrupt((Chiamata interrupt))
+
+            chiamata_interrupt --> isr
+
+            bios--> post
+            bios--> memcheck
+            bios--> gestione_interrupt --> idt ---> isr
+            bios--> bootstrap --> kernel
+
+            kernel --> gestione_memoria
+            kernel --> init_userspace
+        end
+
+        subgraph Spazio utente
+            shell(Shell); programma(Programma); interpretazione_comando((Interpretazione comando));
+
+            init_userspace --> shell
+            shell --> interpretazione_comando --> programma --> chiamata_interrupt
+        end
+    end
+    
