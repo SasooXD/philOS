@@ -11,20 +11,19 @@ ORG 0x00000 ; TODO: pick a real address
 
 ; INT 0x01: Single stepping (trap flag)
 int01_handler:
-	PUSH	AX
-	PUSH	DS
+	PUSH AX
+	PUSH DS
 
 	; DS actually points to data segment
-	MOV		AX,		0x0000 	; TODO: pick a real address
-	MOV		DS,		AX
+	MOV AX, 0x0000 ; TODO: pick a real address
+	MOV DS, AX
 
 	; Print error message
-	MOV		SI,		int01_message
-	; TODO: actually print message
+	MOV SI, int01_message ; TODO: actually print message
 
 	; Restore registers
-	POP		DS
-	POP		AX
+	POP DS
+	POP AX
 
 	IRET
 
@@ -32,4 +31,4 @@ int01_handler:
 	int01_message db "Single step!", 0
 
 	; Full 128 byte padding
-	TIMES	128 - ($ - int01_handler) DB 0x00
+	TIMES 128 - ($ - int01_handler) DB 0x00

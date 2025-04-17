@@ -24,7 +24,7 @@ void loop()
 	for (int i = 0; i < ADDRESS_BITS; i++)
 	{
 		int bit_value = digitalRead(address_pins[i]); // Read one bit
-		address |= (bit_value << i);				  // Combine with already read bits
+		address |= (bit_value << i); // Combine with already read bits
 	}
 
 	// Print address in hexadecimal forma to serial port

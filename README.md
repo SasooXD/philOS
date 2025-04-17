@@ -1,4 +1,4 @@
-![philOS'](res/banner.png)
+![philOS' logo](res/banner.png)
 
 # `msg DB 'Welcome to philOS.', 0`
 
@@ -47,5 +47,17 @@ While we’re not accepting contributions right now, feedback is always apprecia
 ## `INT 0x05 ; GET_NEXT_FREE_SEGMENT`
 
 We don’t have a fixed roadmap for what to implement next; we prefer to develop things as we go. Software-wise, you might want to check `; TODO:` comments, most of them are either "fix this" or "make that". One final goal could be to create an approximate replica of the [**Olivetti M24**](https://en.wikipedia.org/wiki/Olivetti_M24)—perhaps an enhanced version of it.
+
+## `INT 0X06 ; LOAD_VGA_MODE`
+
+The following are photographs showing the evolution of the project in chronological order.
+
+![Picture no. 1](res/photos/1.jpg)
+![Picture no. 2](res/photos/2.jpg)
+![Picture no. 3](res/photos/3.jpg)
+![Picture no. 4](res/photos/4.jpg)
+![Picture no. 5](res/photos/5.jpg)
+![Picture no. 6](res/photos/6.jpg)
+![Picture no. 7](res/photos/7.jpg)
 
 # `RET`

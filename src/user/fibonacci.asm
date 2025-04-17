@@ -3,12 +3,12 @@ BITS 16
 ORG 0x08100 ; User space starting address (ROM segment, 5th block)
 
 start:
-	MOV		AX,	0
-	MOV		BX,	1
+	MOV AX, 0
+	MOV BX, 1
 
 fibonacci_loop:
-	ADD		AX,	BX
-	XCHG	AX,	BX
-	JNC		fibonacci_loop
+	ADD AX, BX
+	XCHG AX, BX
+	JNC fibonacci_loop
 
-	JMP		start
+	JMP start

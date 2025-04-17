@@ -11,20 +11,19 @@ ORG 0x00000 ; TODO: pick a real address
 
 ; INT 0x00: Division by zero
 int00_handler:
-	PUSH	AX
-	PUSH	DS
+	PUSH AX
+	PUSH DS
 
 	; DS actually points to data segment
-	MOV		AX,		0x0000 	; TODO: pick a real address
-	MOV		DS,		AX
+	MOV AX, 0x0000 ; TODO: pick a real address
+	MOV DS, AX
 
 	; Print error message
-	MOV		SI,		int00_message
-	; TODO: actually print message
+	MOV SI, int00_message ; TODO: actually print message
 
 	; Restore registers
-	POP		DS
-	POP		AX
+	POP DS
+	POP AX
 
 	IRET
 
@@ -32,4 +31,4 @@ int00_handler:
 	int00_message db "Error! division by zero!", 0
 
 	; Full 128 byte padding
-	TIMES	128 - ($ - int00_handler) DB 0x00
+	TIMES 128 - ($ - int00_handler) DB 0x00

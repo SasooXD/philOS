@@ -1,32 +1,32 @@
 # Compiler and assembler, their respective flags along as the cleaning script and an interpreter
-ASM				:= nasm
-ASM_FLAGS		:= -f bin
-CC				:= ia16-elf-gcc
-C_FLAGS 		:= -S -Os -ffreestanding -fno-builtin -masm=intel \
-				-fomit-frame-pointer -fno-exceptions \
-				-fno-asynchronous-unwind-tables
-INTERPRETER		:= python3
-CLEANING_SCRIPT	:= tools/clean.py
+ASM := nasm
+ASM_FLAGS := -f bin
+CC := ia16-elf-gcc
+C_FLAGS := -S -Os -ffreestanding -fno-builtin -masm=intel \
+	-fomit-frame-pointer -fno-exceptions \
+	-fno-asynchronous-unwind-tables
+INTERPRETER := python3
+CLEANING_SCRIPT := tools/clean.py
 
 # Build directories
 # BUILD_DIR contains all binaries
 # ASM_DIR is a subdirectory of BUILD_DIR and contains compiled code from C source code
-BUILD_DIR	:= build
-ASM_DIR		:= $(BUILD_DIR)/asm
+BUILD_DIR := build
+ASM_DIR := $(BUILD_DIR)/asm
 
 # Source code files in the src/ directory and all of its subdirectories
-ASM_FILES	:= $(shell find src -type f -name '*.asm')
-C_FILES		:= $(shell find src -type f -name '*.c')
+ASM_FILES := $(shell find src -type f -name '*.asm')
+C_FILES := $(shell find src -type f -name '*.c')
 
 # Binary files for every source code file found
-ASM_BINS	:= $(patsubst src/%.asm,$(BUILD_DIR)/$(notdir %.bin),$(ASM_FILES))
-C_ASM_FILES	:= $(patsubst src/%.c,$(ASM_DIR)/$(notdir %.s),$(C_FILES))
-C_BINS		:= $(patsubst $(ASM_DIR)/%.s,$(BUILD_DIR)/%.bin,$(C_ASM_FILES))
+ASM_BINS := $(patsubst src/%.asm,$(BUILD_DIR)/$(notdir %.bin),$(ASM_FILES))
+C_ASM_FILES := $(patsubst src/%.c,$(ASM_DIR)/$(notdir %.s),$(C_FILES))
+C_BINS := $(patsubst $(ASM_DIR)/%.s,$(BUILD_DIR)/%.bin,$(C_ASM_FILES))
 
 # Mark files in ASM_DIR as secondary to prevent them from being deleted
 .SECONDARY: $(C_ASM_FILES)
 
-# Build all binary and pdf files
+# Build all binaries
 all: $(ASM_BINS) $(C_BINS)
 	@echo "All done."
 

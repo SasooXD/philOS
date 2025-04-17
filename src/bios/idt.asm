@@ -8,9 +8,9 @@ BITS 16
 ORG 0x00000 ; IDT starting address (ROM segment, 1st block)
 
 ; The following is an example of the structure of an element in the IDT:
-; - double word (16 bit) for the handler's offset,
-; - double word (16 bit) for the handler's segment.
-; In total, every entry in the IDT occupies 2 double words, or 4 bytes.
+; - a word (16 bits) for the handler's offset,
+; - a word (16 bits) for the handler's segment.
+; In total, every entry in the IDT occupies 2 words, or 4 bytes.
 
 ; This means that even if we know the absolute address of the handler, if it exceeds the 16 bit
 ; range, there's not enough space to dictate all 20 bits of it. So we have to do some math:
