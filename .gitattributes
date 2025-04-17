@@ -1,23 +1,23 @@
 # Automatically decide if text
-*	text=auto
+* text=auto
 
 # General rules for pretty much everything
-*	eol=lf
-*	indent-tabs=true
-*	tab-width=4
+* eol=lf
+* indent-tabs=true
+* tab-width=4
 
 # Rules for documentation (text) files
-*.md			text	diff=markdown
-*.typ			text	diff=tex
-*.pdf					diff=astextplain
+*.md text diff=markdown
+*.typ text diff=tex
+*.pdf diff=astextplain
 
 # Rules for binary files
-*.png			binary
-*.jpg			binary
-*.xcf			binary
-*.zip			binary
+*.png binary
+*.jpg binary
+*.xcf binary
+*.zip binary
 
 # Exclude Git files from exporting
-.gitattributes	export-ignore
-.gitignore		export-ignore
-.gitkeep		export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+.gitkeep export-ignore
