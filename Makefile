@@ -47,7 +47,8 @@ $(ASM_DIR)/%.s: src/%.c | $(ASM_DIR)
 
 $(BUILD_DIR)%.bin: $(ASM_DIR)/%.s | $(BUILD_DIR)
 	@echo "$(ASM): Assembling \"$(ASM_DIR)$(notdir $<)\" to \"$(BUILD_DIR)$(notdir $@)\"."
-	@if ! $(ASM) $(ASM_FLAGS) $(ASM_DIR)$(notdir $<) -o $(BUILD_DIR)$(notdir $@); then \ echo "$(ASM): Error when assembling \"$(ASM_DIR)$(notdir $<)\", exiting."; \ exit 1; \
+	@if ! $(ASM) $(ASM_FLAGS) $(ASM_DIR)$(notdir $<) -o $(BUILD_DIR)$(notdir $@); then \
+		echo "$(ASM): Error when assembling \"$(ASM_DIR)$(notdir $<)\", exiting."; \ exit 1; \
 	fi
 
 $(BUILD_DIR)%.bin: src/%.asm | $(BUILD_DIR)
@@ -77,22 +78,22 @@ release: all
 		$(BUILD_DIR)rom1/boot.bin > $(BUILD_DIR)rom1.bin
 
 	@rom1_size=$$(stat -c%s $(BUILD_DIR)rom1.bin); \
-	 if [ $$rom1_size -ne 64000 ]; then \
-	   echo "Error: rom1.bin size ($$rom1_size) is not 64000 bytes! Aborting release."; \
-	   rm -rf $(BUILD_DIR); \
-	   exit 1; \
-	 fi
+	if [ $$rom1_size -ne 64000 ]; then \
+		echo "Error: rom1.bin size ($$rom1_size) is not 64000 bytes! Aborting release."; \
+		rm -rf $(BUILD_DIR); \
+		exit 1; \
+	fi
 
 	@echo "Building rom2.bin..."
 	@cat $(BUILD_DIR)rom2/kernel.bin \
 		$$(find $(BUILD_DIR)rom2 -type f ! -name 'kernel.bin' | sort) > $(BUILD_DIR)rom2.bin
 
 	@rom2_size=$$(stat -c%s $(BUILD_DIR)rom2.bin); \
-	 if [ $$rom2_size -gt 64000 ]; then \
-	   echo "Error: rom2.bin size ($$rom2_size) exceeds 64000 bytes! Aborting release."; \
-	   rm -rf $(BUILD_DIR); \
-	   exit 1; \
-	 fi
+	if [ $$rom2_size -gt 64000 ]; then \
+		echo "Error: rom2.bin size ($$rom2_size) exceeds 64000 bytes! Aborting release."; \
+		rm -rf $(BUILD_DIR); \
+		exit 1; \
+	fi
 
 	@echo "Cleaning up build directory..."
 	@find $(BUILD_DIR) -type f -name '*.bin' ! -name 'rom1.bin' ! -name 'rom2.bin' -delete
