@@ -59,5 +59,6 @@ The following are photographs showing the evolution of the project in chronologi
 ![Picture no. 5](res/photos/5.jpg)
 ![Picture no. 6](res/photos/6.jpg)
 ![Picture no. 7](res/photos/7.jpg)
+![Picture no. 8](res/photos/8.jpg)
 
 # `RET`
