@@ -7,7 +7,7 @@
 
 CPU 8086
 BITS 16
-ORG 0x00000 ; TODO: pick a real address
+ORG 0xF0400 ; ISR starting address (ROM segment, 2nd block)
 
 ; INT 0x00: Division by zero
 int00_handler:

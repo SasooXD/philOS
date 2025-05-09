@@ -1,6 +1,6 @@
 CPU 8086
 BITS 16
-ORG 0xF0400 ; BIOS starting address (ROM segment, 2nd block)
+ORG 0xF4C00 ; BIOS starting address (ROM segment, 3rd block)
 
 ; ------------------------------------------------
 ; Starting point of the BIOS, first thing loaded

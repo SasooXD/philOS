@@ -1,6 +1,6 @@
 CPU 8086
 BITS 16
-ORG 0x08400 ; User space starting address (ROM segment, 5th block)
+ORG 0x08400 ; User space starting address (ROM segment, 6th block)
 
 start:
 	MOV AX, 0

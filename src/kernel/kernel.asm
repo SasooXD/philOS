@@ -1,9 +1,8 @@
 CPU 8086
 BITS 16
-ORG 0x00400 ; Kernel image starting address (ROM segment, 4th block)
+ORG 0x00400 ; Kernel image starting address (ROM segment, 5th block)
 ;! This is not an address in the RAM segment! This is where the image should lie (in ROM),
-;! but unless safe mode is on, we should be in RAM. Otherwise, the address is correct
-;! and we can safely continue.
+;! but unless safe mode is on, we should be in RAM. Otherwise, the address is correct.
 
 start:
 	;TODO: DS and ES must be moved somewhere around here, SS has to be placed better

@@ -3,7 +3,7 @@
 
 CPU 8086
 BITS 16
-ORG 0xFFFF0 ; The i8086 will begin execution here after RESET (ROM segment, 3rd block)
+ORG 0xFFFF0 ; Reset vector (ROM segment, 4th block)
 
 start:
 	JMP FAR [jump_target] ; Jump away, we don't have space here
