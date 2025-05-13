@@ -1,0 +1,4 @@
+BITS 16
+CPU 8086
+
+JMP short 0x0000

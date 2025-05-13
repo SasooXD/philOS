@@ -1,14 +1,14 @@
 CPU 8086
-BITS 16
+BITS 8
 ORG 0x08400 ; User space starting address (ROM segment, 6th block)
 
 start:
-	MOV AX, 0
-	MOV BX, 1
+	MOV AL, 0
+	MOV BL, 1
 
 fibonacci_loop:
-	ADD AX, BX
-	XCHG AX, BX
+	ADD AL, BL
+	XCHG AL, BL
 	JNC fibonacci_loop
 
 	JMP start
