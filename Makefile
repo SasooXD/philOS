@@ -7,6 +7,7 @@ C_FLAGS := -S -Os -ffreestanding -fno-builtin -masm=intel \
 	-fno-asynchronous-unwind-tables
 INTERPRETER := python3
 CLEANING_SCRIPT := tools/clean.py
+SPLITTER_SCRIPT := tools/split_rom.py
 
 # Build directories
 BUILD_DIR := build/
@@ -100,6 +101,10 @@ release: all
 	@rm -rf $(BUILD_DIR)rom1 $(BUILD_DIR)rom2 $(ASM_DIR)
 
 	@echo "Release done."
+
+	# ^^^ will need to nuke everything here soon
+
+	$(INTERPRETER) $(SPLITTER_SCRIPT) $(BUILD_DIR)rom.bin
 
 clean:
 	@rm -rf $(BUILD_DIR)
