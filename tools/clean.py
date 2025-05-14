@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # This is a script that "translates" the output of ia16-elf-gcc -S into something that nasm
 # can understand. By default, gcc compilation creates assembly files that are then fed
 # into gas which has different directives and other things that we don't need/need to remove.
@@ -34,7 +36,6 @@ def clean_assembly(input_file):
 		outfile.writelines(cleaned_lines)
 
 if __name__ == "__main__":
-	# Nuke everything if there are not exactly two arguments
 	if len(sys.argv) != 2:
 		print(f"Usage: {sys.argv[0]} <input_file>.")
 		sys.exit(1)

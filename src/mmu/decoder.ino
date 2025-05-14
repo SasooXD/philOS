@@ -2,11 +2,11 @@
 const uint8_t ALE = 45;
 const uint8_t MIO = 46;
 
-// /RD /WR pins, not actually used here 
+// /RD /WR pins, not actually used here
 const uint8_t RD = 49;
 const uint8_t WR = 51;
 
-// Chip select bitmask (based on Arduino Mega pinout)
+// Chip select bitmask
 #define CS_8251_BIT  _BV(0)  // Pin 48, PORTH0
 #define CS_8255_BIT  _BV(3)  // Pin 50, PORTH3
 #define CS_8259_BIT  _BV(1)  // Pin 47, PORTH1
@@ -15,8 +15,10 @@ const uint8_t WR = 51;
 #define CS_ROM1_BIT  _BV(6)  // Pin 43, PORTL6
 #define CS_ROM2_BIT  _BV(5)  // Pin 44, PORTL5
 
-void setup() 
+void setup()
 {
+	noInterrupts();
+
     // Set AD0–AD7 on PORTA, AD8–AD15 on PORTC and AD16–AD19 on PORTK as input
     DDRA = 0x00;
     DDRC = 0x00;
@@ -36,7 +38,7 @@ void setup()
     PORTL |= CS_RAM_BIT | CS_ROM1_BIT | CS_ROM2_BIT;
 }
 
-void loop() 
+void loop()
 {
     uint32_t address;
 
@@ -60,21 +62,21 @@ void loop()
     {
         if (address < 0x00400UL || // IDT (ROM #1)
         (address >= 0xF0400UL && address <= 0xFFFEFUL)) // ISR, BIOS, bootloader (ROM #1)
-        {      
+        {
             PORTL &= ~CS_ROM1_BIT;
-        } 
+        }
         else if (address >= 0x00400UL && address <= 0x103FFUL)  // OS (ROM #2)
         {
             PORTL &= ~CS_ROM2_BIT;
-        } 
+        }
         else //if (address >= 0x10400UL && address <= 0x183FFUL) // RAM
         {
             PORTL &= ~CS_RAM_BIT;
         }
-    } 
+    }
     else // IO access
     {
-        switch (address & 0xFFFFF) 
+        switch (address & 0xFFFFF)
         {
             case 0x00000: case 0x00001: case 0x00002: case 0x00003: // 8255
                 PORTH &= ~CS_8255_BIT;

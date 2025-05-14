@@ -1,5 +1,5 @@
 CPU 8086
-BITS 8
+BITS 16
 ORG 0x08400 ; User space starting address (ROM segment, 6th block)
 
 start:
