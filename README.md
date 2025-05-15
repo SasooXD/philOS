@@ -10,7 +10,7 @@ We named it **_philOS_**.
 
 The software consists of a minimalistic **16-bit UNIX-like kernel**, several **user programs**, and a fully **custom BIOS**.
 
-The hardware is built around the legendary **Intel 8086**, the 16-bit processor that gave life to the x86 architecture, along with **256 KB of RAM** and **128 KB of ROM**.
+The hardware is built around the legendary **Intel 8086**, the 16-bit processor that gave life to the x86 architecture, along with **128 KiB of RAM** and **64 KiB of ROM**.
 
 ## `INT 0x01 ; GET_PURPOSE_N_HISTORY`
 
