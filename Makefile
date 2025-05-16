@@ -1,4 +1,4 @@
-# Compiler and assembler, their respective flags along as the cleaning script and an interpreter
+# Compiler and assembler, their respective flags along as some scripts
 ASM := nasm
 ASM_FLAGS := -f bin
 CC := ia16-elf-gcc
@@ -8,6 +8,7 @@ C_FLAGS := -S -Os -ffreestanding -fno-builtin -masm=intel \
 INTERPRETER := python3
 CLEANING_SCRIPT := tools/clean.py
 SPLITTER_SCRIPT := tools/split_rom.py
+BUILDER_SCRIPT := tools/build_rom.sh
 
 # Build directories
 BUILD_DIR := build/
@@ -24,7 +25,7 @@ C_BINS := $(patsubst $(ASM_DIR)/%.s,$(BUILD_DIR)%.bin,$(C_ASM_FILES))
 
 .SECONDARY: $(C_ASM_FILES)
 
-# Default target, makes single binaries
+# Default target, makes single indipendent binaries
 all: $(ASM_BINS) $(C_BINS)
 	@echo "All done."
 
@@ -59,52 +60,15 @@ $(BUILD_DIR)%.bin: src/%.asm | $(BUILD_DIR)
 		exit 1; \
 	fi
 
-# Release target, makes ROM-ready binaries
+# Release target, makes two ROM binaries, one for each physical ROM chip
 release: all
-	@echo "Creating ROM directories..."
-	@mkdir -p $(BUILD_DIR)rom1 $(BUILD_DIR)rom2
-
-	@echo "Sorting binaries..."
-	@cp $(BUILD_DIR)idt.bin $(BUILD_DIR)rom1/
-	@cp $(BUILD_DIR)bios.bin $(BUILD_DIR)rom1/
-	@cp $(BUILD_DIR)boot.bin $(BUILD_DIR)rom1/
-	@cp $(BUILD_DIR)isr*.bin $(BUILD_DIR)rom1/ 2>/dev/null || true
-	@cp $(BUILD_DIR)kernel.bin $(BUILD_DIR)rom2/
-	@find $(BUILD_DIR) -maxdepth 1 -name '*.bin' ! -name 'rom1.bin' ! -name 'rom2.bin' ! -name 'idt.bin' ! -name 'bios.bin' ! -name 'boot.bin' ! -name 'isr*.bin' ! -name 'kernel.bin' -exec cp {} $(BUILD_DIR)rom2/ \;
-
-	@echo "Building rom1.bin..."
-	@cat $(BUILD_DIR)rom1/idt.bin \
-		$(BUILD_DIR)rom1/bios.bin \
-		$$(find $(BUILD_DIR)rom1 -name 'isr*.bin' | sort -V) \
-		$(BUILD_DIR)rom1/boot.bin > $(BUILD_DIR)rom1.bin
-
-	@rom1_size=$$(stat -c%s $(BUILD_DIR)rom1.bin); \
-	if [ $$rom1_size -ne 64000 ]; then \
-		echo "Error: rom1.bin size ($$rom1_size) is not 64000 bytes! Aborting release."; \
-		rm -rf $(BUILD_DIR); \
-		exit 1; \
-	fi
-
-	@echo "Building rom2.bin..."
-	@cat $(BUILD_DIR)rom2/kernel.bin \
-		$$(find $(BUILD_DIR)rom2 -type f ! -name 'kernel.bin' | sort) > $(BUILD_DIR)rom2.bin
-
-	@rom2_size=$$(stat -c%s $(BUILD_DIR)rom2.bin); \
-	if [ $$rom2_size -gt 64000 ]; then \
-		echo "Error: rom2.bin size ($$rom2_size) exceeds 64000 bytes! Aborting release."; \
-		rm -rf $(BUILD_DIR); \
-		exit 1; \
-	fi
-
-	@echo "Cleaning up build directory..."
-	@find $(BUILD_DIR) -type f -name '*.bin' ! -name 'rom1.bin' ! -name 'rom2.bin' -delete
-	@rm -rf $(BUILD_DIR)rom1 $(BUILD_DIR)rom2 $(ASM_DIR)
-
+	@echo "Building ROM image..."
+	@$(BUILDER_SCRIPT) $(BUILD_DIR)
+	
+	@echo "Splitting ROM image..."
+	@$(INTERPRETER) $(SPLITTER_SCRIPT) $(BUILD_DIR)rom.bin
+	
 	@echo "Release done."
-
-	# ^^^ will need to nuke everything here soon
-
-	$(INTERPRETER) $(SPLITTER_SCRIPT) $(BUILD_DIR)rom.bin
 
 clean:
 	@rm -rf $(BUILD_DIR)

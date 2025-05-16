@@ -1,47 +1,79 @@
 BITS 16
 CPU 8086
+ORG 0x00000
 
-LCD_CMD_ADDR equ 0xF008
-LCD_DATA_ADDR equ 0xF00B
+LCD_DATA equ 0x00      ; LCD data port
+LCD_CMD equ 0x02      ; LCD command port
 
+section .text
 start:
+	; Initialize HD44780 in 8-bit mode
+	CALL lcd_init
 
-    mov al, 0x30 
-    mov [LCD_CMD_ADDR], al
+	; Write a message
+	MOV SI, msg
 
-    mov al, 0x30 
-    mov [LCD_CMD_ADDR], al
+.write_loop:
+	LODSB
+	OR AL, AL
+	JZ .done
+	CALL lcd_write_data
+	JMP .write_loop
 
-    mov al, 0x30 
-    mov [LCD_CMD_ADDR], al
+.done:
+	HLT
 
-    mov al, 0x38
-    mov [LCD_CMD_ADDR], al
+; =============================
+; Write command
+; =============================
+lcd_write_cmd:
+	MOV DX, LCD_CMD
+	OUT DX, al
+	CALL lcd_delay
+	RET
 
-    mov al, 0x08 
-    mov [LCD_CMD_ADDR], al
+; =============================
+; Write data
+; =============================
+lcd_write_data:
+	MOV DX, LCD_DATA
+	OUT DX, al
+	CALL lcd_delay
+	RET
 
-    mov al, 0x01 
-    mov [LCD_CMD_ADDR], al
+; =============================
+; Lil delay thingy
+; =============================
+lcd_delay:
+	PUSH CX
+    MOV CX, 0xFFFF
+.delay_loop:
+	LOOP .delay_loop
+	POP CX
+	RET
 
-    mov al, 0x06
-    mov [LCD_CMD_ADDR], al
+; =============================
+; Initializes LCD
+; =============================
+lcd_init:
+	; Function set: 8-bit, 2 rows, 5x8 font
+	MOV AL, 0x38
+	CALL lcd_write_cmd
 
-    mov al, 0x0C
-    mov [LCD_CMD_ADDR], al
+	; Display ON, cursor OFF, blink OFF
+	MOV AL, 0x0C
+	CALL lcd_write_cmd
 
-    ; Function set command
-    mov al, 'C'
-    mov [LCD_DATA_ADDR], al
+	; Entry mode set: increment, no shift
+	MOV AL, 0x06
+	CALL lcd_write_cmd
 
-    mov al, 'I'
-    mov [LCD_DATA_ADDR], al
+	; Clear display
+	MOV AL, 0x01
+	CALL lcd_write_cmd
 
-    mov al, 'A' 
-    mov [LCD_DATA_ADDR], al
+	RET
 
-    mov al, 'O' 
-    mov [LCD_DATA_ADDR], al
-
-    jmp $
+section .data
+msg db 'CIAO', 0
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Lil script that splits the ROM image into two cus of 8086 bus thingy.
-# see this for more info idk <https://electronics.stackexchange.com/q/436110>.
+# See this for more info idk <https://electronics.stackexchange.com/q/436110>.
 
 import sys
 import os
@@ -28,6 +28,8 @@ def split_bin_image(input_file):
 		f.write(low_bytes)
 	with open(output_high, 'wb') as f:
 		f.write(high_bytes)
+
+	print(f"{input_file} successfully split in {output_low} and {output_high}.")
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
