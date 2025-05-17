@@ -1,6 +1,6 @@
 CPU 8086
 BITS 16
-ORG 0xF4C00 ; BIOS starting address (ROM segment, 3rd block)
+ORG 0xFCC00 ; BIOS starting address
 
 ; ------------------------------------------------
 ; Starting point of the BIOS, first thing loaded
@@ -133,5 +133,5 @@ msg DB 'Welcome to philOS.', 0
 ; And btw, is there some way to check if we came here from an interrupt? INT 0x05 exists for a
 ; reason, it's useless if we can't set safe mode on after the interrupt brought us here.
 
-; Padding until 62960  B
-times (62960 - ($ - $$)) db 0x00
+; Padding until 13296 B
+times (13296 - ($ - $$)) db 0xFF

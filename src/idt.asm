@@ -1,11 +1,13 @@
 ; This is the interrupt descriptor table (IDT) data structure. This is loaded in the first
-; 1024 bytes of the i8086 total address space and it contains a pointer for each
+; 1024 bytes of the i8086 total memory address space and it contains a pointer for each
 ; interrupt handled by the system. The pointer points to the handler of each
-; interrupt, which is usually part of the BIOS (could also be in the kernel for OPM stuff).
+; interrupt (known as an ISR), which are by default part of the BIOS altough the kernel can make
+; other ones, if it wants to. The following structure points to the default ISR in the BIOS.
 
 CPU 8086
 BITS 16
-ORG 0x00000 ; IDT starting address (ROM segment, 1st block)
+ORG 0x00000 ; IDT starting address
+; This is an address in RAM, so the IDT must be copied there by the BIOS
 
 ; The following is an example of the structure of an element in the IDT:
 ; - a word (16 bits) for the handler's offset,
@@ -220,4 +222,4 @@ dw 0x0000
 dw 0x0000
 
 ; Padding until 1024 B
-times (1024 - ($ - $$)) db 0x00
+times (1024 - ($ - $$)) db 0xFF

@@ -36,6 +36,7 @@ def clean_assembly(input_file):
 		outfile.writelines(cleaned_lines)
 
 if __name__ == "__main__":
+	# Check parameter
 	if len(sys.argv) != 2:
 		print(f"Usage: {sys.argv[0]} <input_file>.")
 		sys.exit(1)

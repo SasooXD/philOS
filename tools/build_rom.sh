@@ -22,10 +22,14 @@ rm -f "$BUILD_DIR/isr.bin" "$BUILD_DIR/os.bin" "$BUILD_DIR/bios_full.bin"
 cat $(ls "$BUILD_DIR"/isr*.bin 2>/dev/null | sort) > "$BUILD_DIR/isr.bin"
 
 # Build bios_full.bin = idt.bin + isr.bin + bios.bin + reset.bin
-cat "$BUILD_DIR/idt.bin" "$BUILD_DIR/isr.bin" "$BUILD_DIR/bios.bin" "$BUILD_DIR/reset.bin" > "$BUILD_DIR/bios_full.bin"
+cat "$BUILD_DIR/idt.bin" \
+	"$BUILD_DIR/isr.bin" \
+	"$BUILD_DIR/bios.bin" \
+	"$BUILD_DIR/reset.bin" \
+	> "$BUILD_DIR/bios_full.bin"
 rm -f "$BUILD_DIR"/isr*.bin
 
-# List of already used binaries
+# List of already used binaries, isr*.bin are already deleted so no need to check for those
 USED_FILES=(
 	"idt.bin"
 	"isr.bin"
@@ -50,12 +54,12 @@ cat "$BUILD_DIR/kernel.bin" "${REMAINING_FILES[@]}" > "$BUILD_DIR/os.bin"
 # Create final ROM image: os.bin + bios_full.bin
 cat "$BUILD_DIR/os.bin" "$BUILD_DIR/bios_full.bin" > "$OUT_ROM"
 
-# Nuke everything if the rom image is not exactly the expected size
+# Nuke everything if the ROM is not exactly the expected size
 ROM_SIZE=$(stat -c%s "$OUT_ROM")
 if [ "$ROM_SIZE" -ne "$EXPECTED_ROM_SIZE" ]; then
- 	echo "Error: ROM image must be exactly $EXPECTED_ROM_SIZE bytes, got $ROM_SIZE bytes!"
- 	rm -rf "$BUILD_DIR"
- 	exit 2
+	echo "Error: ROM image must be exactly $EXPECTED_ROM_SIZE bytes, got $ROM_SIZE bytes!"
+	rm -rf "$BUILD_DIR"
+	exit 2
 fi
 
 # Delete all other binaries except rom.bin
