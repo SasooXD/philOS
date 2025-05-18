@@ -1,5 +1,5 @@
-BITS 16
 CPU 8086
+BITS 16
 ORG 0x00000
 
 LCD_DATA equ 0x00 ; LCD data port

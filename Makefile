@@ -13,7 +13,7 @@ BUILDER_SCRIPT := tools/build_rom.sh # BASH SCRIPT!!! DON'T CALL THE INTERPRETER
 # Don't assemble source code files that end with this (e.g. src/bios/shell_ign.asm)
 IGNORE_POSTFIX := _ign
 
-# Source code files that aren't in debug folder or that need to be ignored by postfix naming
+# Source code files that aren't in debug folder or that aren't ignored by postfix naming
 ASM_FILES := $(filter-out %$(IGNORE_POSTFIX).asm, \
 	$(shell find src -type f -name '*.asm' ! -path 'src/debug/*'))
 C_FILES := $(filter-out %$(IGNORE_POSTFIX).c, \

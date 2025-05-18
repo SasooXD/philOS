@@ -3,8 +3,11 @@
 # Script that concatenates all compiled files to build the ROM image.
 # Remember that the image still needs to be split into two parts!
 
-# This is the expected size of the full ROM image, basically the size of a single ROM chip
-EXPECTED_ROM_SIZE=65536  # 64 KiB
+# This is the expected size of the full ROM image with padding in order to split it in 64 KiB x 2
+EXPECTED_ROM_SIZE=131072  # 128 KiB
+
+# How much the ROM image should be padded in order to reach the aforementioned size
+PADDING_SIZE=65536  # 64 KiB
 
 # Check parameter
 if [ -z "$1" ]; then
@@ -51,8 +54,9 @@ done
 # Create os.bin = kernel.bin + all remaining binaries
 cat "$BUILD_DIR/kernel.bin" "${REMAINING_FILES[@]}" > "$BUILD_DIR/os.bin"
 
-# Create final ROM image: os.bin + bios_full.bin
-cat "$BUILD_DIR/os.bin" "$BUILD_DIR/bios_full.bin" > "$OUT_ROM"
+# Create final ROM image: os.bin + bios_full.bin with 64 KiB of padding (0xFF) beforehand
+(cat /dev/zero | tr '\000' '\377' | head -c "$PADDING_SIZE"; \
+	cat "$BUILD_DIR/os.bin" "$BUILD_DIR/bios_full.bin") > "$OUT_ROM"
 
 # Nuke everything if the ROM is not exactly the expected size
 ROM_SIZE=$(stat -c%s "$OUT_ROM")
@@ -65,4 +69,4 @@ fi
 # Delete all other binaries except rom.bin
 find "$BUILD_DIR" -type f -name '*.bin' ! -name 'rom.bin' -delete
 
-echo "Full ROM image successfully built at $OUT_ROM (65536 byte)"
+echo "Full ROM image successfully built at $OUT_ROM ($EXPECTED_ROM_SIZE bytes)."

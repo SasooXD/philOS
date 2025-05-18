@@ -1,0 +1,13 @@
+CPU 8086
+BITS 16
+
+start:
+	MOV AX, 0x0000
+	MOV DS, AX
+
+	MOV SI, 0x0200
+	MOV BYTE [DS:SI], 0x55
+
+.loop:
+	MOV AL, [DS:SI]
+	JMP .loop
