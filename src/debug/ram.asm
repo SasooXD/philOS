@@ -2,12 +2,16 @@ CPU 8086
 BITS 16
 
 start:
-	MOV AX, 0x0000
-	MOV DS, AX
+	MOV AX, 0
+	MOV ES, AX
 
-	MOV SI, 0x0200
-	MOV BYTE [DS:SI], 0x55
+	MOV AX, 0xA55A
 
-.loop:
-	MOV AL, [DS:SI]
-	JMP .loop
+	MOV DI, 0x2000
+	MOV [ES:DI], AX
+
+read_loop:
+	MOV DI, 0x2000
+	MOV BX, [es:di]
+
+	JMP read_loop

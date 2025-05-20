@@ -1,94 +1,92 @@
-// ALE and M/IO pins
-const uint8_t ALE = 45;
-const uint8_t MIO = 46;
+const int AD[]     = {22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41}; // Address and data multiplexed signals
+const int ALE      = 46;
+const int RD       = 47;
+const int WR       = 48;
+const int MIO      = 49;
+const int BHE      = 50;
+int AA0             = 1;
+int AA18            = 1;
 
-// /RD /WR pins, not actually used here
-const uint8_t RD = 49;
-const uint8_t WR = 51;
+const int CS_ROM1  = 42; // ROM #1 chip select signal
+const int CS_ROM2  = 43; // ROM #2 chip select signal
+const int CS_RAM1  = 44; // RAM #1 chip select signal
+const int CS_RAM2  = 45; // RAM #2 chip select signal
+const int CS_LCD  =  53; // LCD chip select signal
 
-// Chip select bitmask
-#define CS_8251_BIT  _BV(0)  // Pin 48, PORTH0
-#define CS_8255_BIT  _BV(3)  // Pin 50, PORTH3
-#define CS_8259_BIT  _BV(1)  // Pin 47, PORTH1
-#define CS_LCD_BIT   _BV(1)  // Pin 52, PORTB1
-#define CS_RAM_BIT   _BV(7)  // Pin 42, PORTL7
-#define CS_ROM1_BIT  _BV(6)  // Pin 43, PORTL6
-#define CS_ROM2_BIT  _BV(5)  // Pin 44, PORTL5
+void setup() {
+	pinMode(CS_ROM1, OUTPUT);
+ 	pinMode(CS_ROM2, OUTPUT);
+ 	pinMode(CS_RAM1, OUTPUT);
+ 	pinMode(CS_RAM2, OUTPUT);
+ 	pinMode(CS_LCD, OUTPUT);
 
-void setup()
-{
-	noInterrupts();
+ 	pinMode(ALE, INPUT);
+ 	pinMode(RD, INPUT);
+ 	pinMode(WR, INPUT);
+ 	pinMode(MIO, INPUT);
 
-    // Set AD0–AD7 on PORTA, AD8–AD15 on PORTC and AD16–AD19 on PORTK as input
-    DDRA = 0x00;
-    DDRC = 0x00;
-    DDRK = 0x00;
-
-	DDRL &= ~(_BV(4)); // ALE input (PL4)
-	DDRL &= ~(_BV(3)); // MIO input (PL3)
-
-    // Configure CS pins as output
-    DDRH |= CS_8251_BIT | CS_8255_BIT | CS_8259_BIT;
-    DDRB |= CS_LCD_BIT;
-    DDRL |= CS_RAM_BIT | CS_ROM1_BIT | CS_ROM2_BIT;
-
-    // Deactive all CS pins at start
-    PORTH |= CS_8251_BIT | CS_8255_BIT | CS_8259_BIT;
-    PORTB |= CS_LCD_BIT;
-    PORTL |= CS_RAM_BIT | CS_ROM1_BIT | CS_ROM2_BIT;
+for (int i = 0; i < 20; i++) {
+	pinMode(AD[i], INPUT);
 }
+
+	digitalWrite(CS_ROM1, HIGH);
+	digitalWrite(CS_ROM2, HIGH);
+ 	digitalWrite(CS_RAM1, HIGH);
+ 	digitalWrite(CS_RAM2, HIGH);
+ 	digitalWrite(CS_LCD, LOW);
+}
+
+int aus = 0;
 
 void loop()
 {
-    uint32_t address;
-
-    // Wait for ALE (Pin 45 -> PL4)
-    while (!(PINL & _BV(4)));
-    while (PINL & _BV(4));  // Wait for ALE to drop low
-
-    // Latch and compute full address (20 bit)
-    uint8_t ad_low  = PINA; // AD0–AD7
-    uint8_t ad_mid  = PINC; // AD8–AD15
-    uint8_t ad_high = PINK & 0x0F; // AD16–AD19
-    address = ((uint32_t)ad_high << 16) | (ad_mid << 8) | ad_low;
-
-    // Deactive every CS
-    PORTH |= CS_8251_BIT | CS_8255_BIT | CS_8259_BIT;
-    PORTB |= CS_LCD_BIT;
-    PORTL |= CS_RAM_BIT | CS_ROM1_BIT | CS_ROM2_BIT;
-
-    // Decode access
-    if (PINL & _BV(3))  // Memory access
-    {
-        if (address < 0x00400UL || // IDT (ROM #1)
-        (address >= 0xF0400UL && address <= 0xFFFEFUL)) // ISR, BIOS, bootloader (ROM #1)
-        {
-            PORTL &= ~CS_ROM1_BIT;
-        }
-        else if (address >= 0x00400UL && address <= 0x103FFUL)  // OS (ROM #2)
-        {
-            PORTL &= ~CS_ROM2_BIT;
-        }
-        else //if (address >= 0x10400UL && address <= 0x183FFUL) // RAM
-        {
-            PORTL &= ~CS_RAM_BIT;
-        }
+  if(digitalRead(ALE) == HIGH){
+    if(digitalRead(AD[0]) == LOW){
+      AA0 = 0;
+    }else{
+      AA0 = 1;
     }
-    else // IO access
-    {
-        switch (address & 0xFFFFF)
-        {
-            case 0x00000: case 0x00001: case 0x00002: case 0x00003: // 8255
-                PORTH &= ~CS_8255_BIT;
-                break;
-            case 0x00004: case 0x00005: // 8259
-                PORTH &= ~CS_8259_BIT;
-                break;
-            case 0x00006: case 0x00007: //8251
-                PORTH &= ~CS_8251_BIT;
-                break;
-            case 0x00008: case 0x00009: //LCD
-                PORTB &= ~CS_LCD_BIT;
-                break;
-        }
+    if(digitalRead(AD[18]) == LOW){
+      AA18 = 0;
+    }else{
+      AA18 = 1;
     }
+  }
+
+  //rom bassa
+  if(digitalRead(ALE) == LOW and digitalRead(RD) == LOW and digitalRead(WR) == HIGH and digitalRead(MIO) == HIGH and AA0 == 0 and AA18 == 1){
+    digitalWrite(CS_ROM1, LOW);
+    Serial.println("ROM1 accesa11111");
+  }else{
+    digitalWrite(CS_ROM1, HIGH);
+  }
+
+  //rom alta
+  if(digitalRead(ALE) == LOW and digitalRead(RD) == LOW and digitalRead(WR) == HIGH and digitalRead(BHE) == LOW and AA18 == 1 and digitalRead(MIO) == HIGH){
+    digitalWrite(CS_ROM2, LOW);
+    Serial.println("ROM2 accesa2222");
+  }else{
+    digitalWrite(CS_ROM2, HIGH);
+  }
+
+ //ram bassa
+  if(digitalRead(ALE) == LOW and digitalRead(RD) !=digitalRead(WR) and digitalRead(MIO) == HIGH and AA0 == 0 and AA18 == 0){
+    digitalWrite(CS_RAM1, LOW);
+  }else{
+    digitalWrite(CS_RAM1, HIGH);
+  }
+
+  //ram alta
+  if(digitalRead(ALE) == LOW and digitalRead(RD) != digitalRead(WR) and digitalRead(BHE) == LOW and AA18 == 0 and digitalRead(MIO) == HIGH){
+    digitalWrite(CS_RAM2, LOW);
+  }else{
+    digitalWrite(CS_RAM2, HIGH);
+  }
+
+//lcd
+if(digitalRead(ALE) == LOW and digitalRead(RD) != digitalRead(WR) and digitalRead(MIO) == LOW){
+    digitalWrite(CS_LCD, HIGH);
+  }else{
+    digitalWrite(CS_LCD, LOW);
+  }
+}
