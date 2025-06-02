@@ -11,25 +11,45 @@ ORG 0xFAC00 ; ISR 0x00 starting address
 
 ; INT 0x00: Division by zero
 int00_handler:
+CPU 8086
+BITS 16
+
+start:
 	PUSH AX
+	PUSH BX
+	PUSH CX
+	PUSH DX
+	PUSH SI
+	PUSH DI
+	PUSH BP
 	PUSH DS
+	PUSH ES
+	PUSH SS
 
-	; DS actually points to data segment
-	MOV AX, 0x0000 ; TODO: pick a real address
-	MOV DS, AX
+	MOV AL, 'c'
+	OUT 0x02, AL
+	
+	MOV AL, 'i'
+	OUT 0x02, AL
+	
+	MOV AL, 'a'
+	OUT 0x02, AL
 
-	; Print error message
-	MOV SI, int00_message ; TODO: actually print message
-
-	; Restore registers
+	MOV AL, 'o'
+	OUT 0x02, AL
+	
+	POP ES
 	POP DS
+	POP BP
+	POP DI
+	POP SI
+	POP DX
+	POP CX
+	POP BX
 	POP AX
-
+	
 	IRET
 
-	; Interrupt message (max 32 characters)
-	int00_message db "Error! division by zero!", 0
-
-	;! FOR DEBUGGING PURPOSES, THIS HANDLER ALONE IS PADDING FOR ALL OF THE ISR MEMORY SPACE.
-	;! BY DEFAULT, THIS VALUE UNDER HERE SHOULD BE 128! REMEMBER TO CHANGE THIS!
-	TIMES 8192 - ($ - int00_handler) DB 0xFF
+;! FOR DEBUGGING PURPOSES, THIS HANDLER ALONE IS PADDING FOR ALL OF THE ISR MEMORY SPACE.
+;! BY DEFAULT, THIS VALUE UNDER HERE SHOULD BE 128! REMEMBER TO CHANGE THIS!
+times 8192 - ($ - int00_handler) DB 0xFF

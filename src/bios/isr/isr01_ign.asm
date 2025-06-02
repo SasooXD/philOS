@@ -11,13 +11,20 @@ start:
 	PUSH BP
 	PUSH DS
 	PUSH ES
+	PUSH SS
 
-	; NMI 101:
-	; 1. Read registers n shi,
-	; 2. Logging on monitor and debug logging on LCD,
-	; 3. Recovery (if possible),
-	; 4. HALT or SOFT RESET.
+	MOV AL, 'c'
+	OUT 0x02, AL
+	
+	MOV AL, 'i'
+	OUT 0x02, AL
+	
+	MOV AL, 'a'
+	OUT 0x02, AL
 
+	MOV AL, 'o'
+	OUT 0x02, AL
+	
 	POP ES
 	POP DS
 	POP BP
@@ -27,5 +34,5 @@ start:
 	POP CX
 	POP BX
 	POP AX
-
+	
 	IRET

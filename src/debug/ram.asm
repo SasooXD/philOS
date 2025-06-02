@@ -15,3 +15,4 @@ read_loop:
 	MOV BX, [es:di]
 
 	JMP read_loop
+	JMP read_loop
