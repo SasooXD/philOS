@@ -2,7 +2,7 @@
 ASM := nasm
 ASM_FLAGS := -f bin
 CC := ia16-elf-gcc
-C_FLAGS := -S -Os -ffreestanding -fno-builtin -masm=intel \
+C_FLAGS := -S -O3 -ffreestanding -fno-builtin -masm=intel \
 	-fomit-frame-pointer -fno-exceptions \
 	-fno-asynchronous-unwind-tables
 INTERPRETER := python3 # all of the scripts below are executables so no actual need for this
@@ -66,7 +66,7 @@ $(BUILD_DIR)%.bin: src/%.asm | $(BUILD_DIR)
 	fi
 
 # Release target, makes two ROM images, one for each physical ROM chip
-release: all
+release: clean all
 	@echo "Building ROM image..."
 	@$(BUILDER_SCRIPT) $(BUILD_DIR)
 

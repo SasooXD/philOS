@@ -8,7 +8,7 @@ This repository contains both hardware diagrams and software code for a retro-co
 
 We named it **_philOS_**.
 
-The software consists of a minimalistic **16-bit UNIX-like kernel**, several **user programs**, and a fully **custom BIOS**.
+The software consists of a very simple **16-bit kernel**, several **user programs**, and a fully **custom BIOS**.
 
 The hardware is built around the legendary **Intel 8086**, the 16-bit processor that gave life to the x86 architecture, along with **128 KiB of RAM** and **64 KiB of ROM**.
 
@@ -18,7 +18,7 @@ Started as a side hobby, later became our final-year exam project for high schoo
 
 Initially, we intended to develop only an operating system (hence the name), but we eventually decided to buy some chips and got to work on building the physical computer as well.
 
-The project is still **work in progress**. There are many things left to implement and improve, however, the journey has taught us a great deal about how a computer _actually_ works under the hood. Working with no abstraction layers (_not even the C standard library!_) was challenging at times, but the result has been far more rewarding and fascinating as a direct consequence.
+The project is still **work in progress**. There are many things left to implement and improve, however, the journey has taught us a great deal about how a computer _actually_ works under the hood. Working with no abstraction layer was challenging at times, but the result has been far more rewarding and fascinating as a direct consequence.
 
 We hope we can inspire you to build a computer from absolutely nothing, too!
 
@@ -32,9 +32,9 @@ We don't accept contributions at this stage, but you're obviously free to fork t
 
 ## `INT 0x03 ; GET_MORE_TECHNICAL`
 
-After cloning, you can `make` the project. This will generate the `build/` directory, which contains a NASM-assembled binary file for each source code file found in the `src/` directory. We currently have _some_ C support, but x86-16 assembly remains the preferred choice for most of the code. If you have an EEPROM programmer and just want the binaries, we periodically release **stable versions**. These come in the form of two 32 KB binaries—one for the BIOS and the other for the OS.
+After cloning, you can `make` the project. This will generate the `build/` directory, which contains a NASM-assembled binary file for each source code file found in the `src/` directory. We currently have _some_ C support, but x86-16 assembly remains the preferred choice for most of the code. That being said, the `make release` option is probably what you're after as this creates two 64 KiB binaries, one for each ROM that you should have hooked up to the i8086. Either way if you have an EEPROM programmer and just want the binaries, we periodically release **stable versions**.
 
-You'll find some useful scripts in the `tools/` directory, most of which help us maintain compatibility between NASM (the assembler we're using) and ia16-elf-gcc (the 16-bit version of GCC).
+You'll find some useful scripts in the `tools/` directory, these mainly help us build the final binary files.
 
 The `hw/` directory contains all the hardware-related files, including the complete **circuit diagram** and a **list of components used**. If you want to build the physical system yourself, you may want to check that first.
 
@@ -52,13 +52,6 @@ We don’t have a fixed roadmap for what to implement next; we prefer to develop
 
 The following are photographs showing the evolution of the project in chronological order.
 
-![Picture no. 1](res/photos/1.jpg)
-![Picture no. 2](res/photos/2.jpg)
-![Picture no. 3](res/photos/3.jpg)
-![Picture no. 4](res/photos/4.jpg)
-![Picture no. 5](res/photos/5.jpg)
-![Picture no. 6](res/photos/6.jpg)
-![Picture no. 7](res/photos/7.jpg)
-![Picture no. 8](res/photos/8.jpg)
+![Photo no. 1](res/photos/1.jpg) ![Photo no. 2](res/photos/2.jpg) ![Photo no. 3](res/photos/3.jpg) ![Photo no. 4](res/photos/4.jpg) ![Photo no. 5](res/photos/5.jpg) ![Photo no. 6](res/photos/6.jpg) ![Photo no. 7](res/photos/7.jpg) ![Photo no. 8](res/photos/8.jpg) ![Photo no. 9](res/photos/9.jpg)
 
 # `RET`
