@@ -3,6 +3,5 @@
 
 CPU 8086
 BITS 16
-ORG 0xF0000 ; Kernel image starting address
 
 start:

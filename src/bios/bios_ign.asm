@@ -1,137 +1,127 @@
 CPU 8086
 BITS 16
-ORG 0xFCC00 ; BIOS starting address
 
-; ------------------------------------------------
-; Starting point of the BIOS, first thing loaded
-; @destroys: AX, DS, ES, SS, SP
-; TODO: actually implement
-; ------------------------------------------------
-start:
-	CLI
+LCD_CMD     EQU 0x00
+LCD_DATA    EQU 0x02
 
-	; ROM Segment
-	MOV AX, 0xF09F
-	MOV DS, AX
-	MOV ES, AX
+; Put the stack pointer at the end of the RAM block
+memory_setup:
+	MOV AX, 0x1FFF   ; segment: (0x1FFF << 4) = 0x1FFF0
 	MOV SS, AX
+	MOV SP, 0x0010   ; offset: 0x1FFF0 + 0x0010 = 0x20000
 
-	; Stack setup near the end of ROM
-	MOV SP, 0x0FFEE
+mov cx, 0xFFFF  ; es. ~16ms a 620kHz
+.delay:
+    dec cx
+    jnz .delay
 
-	STI
+copy_idt:
+	CLI                     ; disable interrupts just for safety
 
-	CALL init_screen
-	CALL print_banner
-	CALL clear_ram
-	CALL bootstrap
+	MOV SI, 0x0000          ; source offset (RAM)
+	MOV DI, 0x0000          ; dst offset (RAM)
 
-	; All done, goodbye BIOS!
-	;JMP FAR 0x0FE01
-	; TODO: absolutely not done btw, implement some checks before jumping
-
-; ------------------------------------------------
-; Initializes screen mode
-; @destroys: AX
-; TODO: actually implement
-; ------------------------------------------------
-init_screen:
-	MOV AX,	0x03
-	INT 0x10
-	RET
-
-; ------------------------------------------------
-; Prints a message to screen
-; @destroys: AL, AH, SI
-; TODO: actually implement
-; ------------------------------------------------
-print_banner:
-	MOV SI, msg
-
-	; Print until end of string
-	print_loop:
-		LODSB
-		OR AL, AL
-		JZ done
-		MOV AH, 0x0E
-		INT 0x10
-		JMP print_loop
-
-	done:
-		RET
-
-; ------------------------------------------------
-; Completely clears the RAM before bootstrapping
-; @destroys: AX, CX, DI, ES
-; ------------------------------------------------
-clear_ram:
-	; ES points to RAM segments
-	MOV AX, 0x0FE0
-	MOV ES, AX
-
-	; Load initial RAM offset (0x0001) into DI
-	MOV DI, 0x0001
-
-	; Range of RAM, this is the number of byte we have to clean
-	MOV CX, 0x7D00
-
-	; Value to write in RAM (0x0000 to clean)
-	MOV AX, 0x0000
-
-	clear_ram_loop:
-		; Write AL in [ES:DI] and increment DI
-		STOSW
-		; Repeat until CX != 0
-		STOSW
-		LOOP clear_ram_loop
-
-		RET
-
-; ------------------------------------------------
-; Bootstraps the kernel from ROM into RAM
-; @destroys: AX, CX, SI, DI, DS, ES
-; ------------------------------------------------
-bootstrap:
-	; DS points to the kernel block (ROM segment, 4th block)
-	MOV AX, 0x0040
+	MOV AX, 0xFA80          ; source segment (ROM)
 	MOV DS, AX
 
-	; Load initial kernel block offset (0x0001) into SI
-	MOV SI, 0x0000
-
-	; ES points to RAM segment
-	MOV AX, 0x0FE0
+	MOV AX, 0x0000          ; dst segment (RAM)
 	MOV ES, AX
 
-	; Load initial RAM offset (0x0001) into DI
-	MOV DI, 0x0001
+	MOV CX, 1024            ; number of bytes to copy over
 
-	; Range of the kernel block, number of words we have to transfer to RAM
-	MOV CX, 0x07C00 / 2
+	CLD
+	REP MOVSB              ; copy!!
 
-	bootstrap_loop:
-		; Load a word from [DS:SI] into AX and increment SI by 2
-		LODSW
-		; Write AX in [ES:DI] and increment DI by 2
-		STOSW
-		; Repeat until CX != 0
-		LOOP bootstrap_loop
+	STI                     ; enable interrupts
 
-		RET
+init:
+        mov cx, 0x0600
+.1:     dec cx
+        jnz .1
 
-msg DB 'Welcome to philOS.', 0
+        mov al, 0x30
+        out LCD_CMD, al
 
-; Should we need to write something, we can borrow some RAM (provided we have the right address)
-; but we need to keep track of it, so that we can clean it after use + security stuff: stack
-; TODO: Implement stack for this thing
+        mov cx, 0x0100
+.2:     dec cx
+        jnz .2
 
-; We should absolutely have some kind of POST and RAM check (i'm thinking read-write for both?)
-; (POST: we must know the addresses of the ports beforehand...)
-; TODO: POST and RAM check
+        mov al, 0x30
+        out LCD_CMD, al
 
-; TODO: safe mode (OPM)!
-; And btw, is there some way to check if we came here from an interrupt? INT 0x05 exists for a
-; reason, it's useless if we can't set safe mode on after the interrupt brought us here.
+        mov cx, 0x0020
+.3:     dec cx
+        jnz .3
 
-; Padding until 13296 B
+        mov al, 0x38    ; function set
+        out LCD_CMD, al
+
+        mov cx, 0x0010
+.4:     dec cx
+        jnz .4
+
+        mov al, 0x08    ; display off
+        out LCD_CMD, al
+
+        mov cx, 0x0010
+.5:     dec cx
+        jnz .5
+
+        mov al, 0x01    ; clear display
+        out LCD_CMD, al
+
+        mov cx, 0x0200
+.6:     dec cx
+        jnz .6
+
+        mov al, 0x02    ; return home
+        out LCD_CMD, al
+
+        mov cx, 0x0200
+.7:     dec cx
+        jnz .7
+
+        mov al, 0x06    ; entry mode set
+        out LCD_CMD, al
+
+        mov cx, 0x0010
+.8:     dec cx
+        jnz .8
+
+        mov al, 0x0c    ; display on, no cursor
+        out LCD_CMD, al
+
+        mov cx, 0x0010
+.9:     dec cx
+        jnz .9
+
+        mov al, 'C'
+        out LCD_DATA, al
+
+        mov cx, 0x0010
+.10:    dec cx
+        jnz .10
+
+        mov al, 'i'
+        out LCD_DATA, al
+
+        mov cx, 0x0010
+.11:    dec cx
+        jnz .11
+
+        mov al, 'a'
+        out LCD_DATA, al
+
+        mov cx, 0x0010
+.12:    dec cx
+        jnz .12
+
+        mov al, 'o'
+        out LCD_DATA, al
+
+        INT 0x00
+
+        JMP $
+
+; padding until 13296 b
 times (13296 - ($ - $$)) db 0xFF
