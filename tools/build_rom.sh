@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Script that concatenates all compiled files to build the ROM image.
 # Remember that the image still needs to be split into two parts!
