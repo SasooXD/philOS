@@ -85,7 +85,7 @@ main:
 	;CALL conf_usart
 	;CALL conf_ppi
 
-	; Now, we POST a little
+	; Now, we POST a little (not needed)
 	;CALL rom_post
 	;CALL ram_post
 	;CALL io_post
